@@ -26,8 +26,11 @@ M.mason = {
 }
 
 M.ui = {
+  cmp = {
+    style = "rosepine",
+  },
   statusline = {
-    theme = "vscode_colored",
+    separator_style = "arrow",
   },
 }
 
