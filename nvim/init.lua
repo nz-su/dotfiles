@@ -1,37 +1,61 @@
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
--- bootstrap lazy and all plugins
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+require("config.lazy")
+require("config.options")
+require("config.autocmds")
 
-if not vim.uv.fs_stat(lazypath) then
-  local repo = "https://github.com/folke/lazy.nvim.git"
-  vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
-end
-
-vim.opt.rtp:prepend(lazypath)
-
-local lazy_config = require "configs.lazy"
-
--- load plugins
-require("lazy").setup({
-  {
-    "NvChad/NvChad",
-    lazy = false,
-    branch = "v2.5",
-    import = "nvchad.plugins",
-  },
-
-  { import = "plugins" },
-}, lazy_config)
-
--- load theme
 dofile(vim.g.base46_cache .. "defaults")
 dofile(vim.g.base46_cache .. "statusline")
 
-require "options"
-require "nvchad.autocmds"
+local mappings = require("config.keybinds")
 
-vim.schedule(function()
-  require "mappings"
-end)
+-- Helper function to set mappings
+local function set_mappings(mode, keymaps)
+  for key, map in pairs(keymaps) do
+    vim.keymap.set(
+      mode, 
+      key, 
+      map[1], 
+      { desc = map[2], remap = map.remap or false, silent = true, noremap = true }
+    )
+  end
+end
+
+-- cmp mappings are set in the config for the plugin...
+
+-- General mappings
+for mode, keymaps in pairs(mappings.general) do
+  set_mappings(mode, keymaps)
+end
+
+-- Bufferline mappings
+for mode, keymaps in pairs(mappings.bufferline) do
+  set_mappings(mode, keymaps)
+end
+
+-- Comment plugin mappings
+for mode, keymaps in pairs(mappings.comment) do
+  set_mappings(mode, keymaps)
+end
+
+-- NvimTree mappings
+for mode, keymaps in pairs(mappings.nvimtree) do
+  set_mappings(mode, keymaps)
+end
+
+-- Telescope mappings
+
+for mode, keymaps in pairs(mappings.telescope) do
+  set_mappings(mode, keymaps)
+end
+
+-- Terminal mappings
+for mode, keymaps in pairs(mappings.terminal) do
+  set_mappings(mode, keymaps)
+end
+
+-- WhichKey mappings
+for mode, keymaps in pairs(mappings.whichkey) do
+  set_mappings(mode, keymaps)
+end
