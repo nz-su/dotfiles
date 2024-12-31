@@ -1,5 +1,4 @@
 local gpu_adapters = require('utils.gpu-adapter')
-local backdrops = require('utils.backdrops')
 
 return {
    max_fps = 120,
