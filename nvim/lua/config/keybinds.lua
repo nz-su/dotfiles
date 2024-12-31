@@ -11,7 +11,6 @@ M.general = {
     ["<C-k>"] = { "<Up>", "Move up" },
   },
   n = {
-
     ["<C-h>"] = { "<C-w>h", "Switch window left" },
     ["<C-l>"] = { "<C-w>l", "Switch window right" },
     ["<C-j>"] = { "<C-w>j", "Switch window down" },
@@ -22,7 +21,10 @@ M.general = {
     ["<leader>n"] = { "<cmd>set nu!<CR>", "Toggle line numbers" },
     ["<leader>rn"] = { "<cmd>set rnu!<CR>", "Toggle relative numbers" },
     ["<leader>ch"] = { "<cmd>NvCheatsheet<CR>", "Toggle NvCheatsheet" },
-    ["<leader>fm"] = { function() require("conform").format { lsp_fallback = true } end, "Format file" },
+    ["<leader>fm"] = {
+      function()
+        require("conform").format { lsp_fallback = true }
+      end, "Format file" },
     ["<leader>ds"] = { vim.diagnostic.setloclist, "LSP diagnostic loclist" },
   },
   t = {
@@ -88,11 +90,11 @@ M.cmp = function(cmp)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif require("luasnip").jumpable(-1) then
-          require("luasnip").jump(-1)
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
+        require("luasnip").jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
   }
 end
 
@@ -106,7 +108,6 @@ M.lsp = {
     ["<leader>wr"] = { vim.lsp.buf.remove_workspace_folder, "Remove workspace folder" },
     ["<leader>wl"] = {
       function()
-
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
       end,
 
@@ -131,13 +132,15 @@ M.telescope = {
     ["<leader>fb"] = { "<cmd>Telescope buffers<CR>", "Find buffers" },
     ["<leader>fh"] = { "<cmd>Telescope help_tags<CR>", "Help tags" },
     ["<leader>ff"] = { "<cmd>Telescope find_files<CR>", "Find files" },
-    ["<leader>fa"] = { "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", "Find all files" },
+    ["<leader>fa"] = { "<cmd>Telescope find_files follow=true hidden=true<CR>", "Find all files" },
     ["<leader>fz"] = { "<cmd>Telescope current_buffer_fuzzy_find<CR>", "Find in current buffer" },
     ["<leader>ma"] = { "<cmd>Telescope marks<CR>", "Find marks" },
     ["<leader>fo"] = { "<cmd>Telescope oldfiles<CR>", "Find old files" },
     ["<leader>cm"] = { "<cmd>Telescope git_commits<CR>", "Git commits" },
     ["<leader>gt"] = { "<cmd>Telescope git_status<CR>", "Git status" },
     ["<leader>pt"] = { "<cmd>Telescope terms<CR>", "Pick hidden terminal" },
+    ["<leader>fs"] = { "<cmd>Telescope lsp_document_symbols<CR>", "Find symbols" },
+    ["<leader>fq"] = { "<cmd>Telescope lsp_workspace_symbols<CR>", "Find workspace symbols" },
     ["<leader>th"] = { function() require("nvchad.themes").open() end, "NvChad themes" },
   },
 }
@@ -161,6 +164,13 @@ M.whichkey = {
   n = {
     ["<leader>wK"] = { "<cmd>WhichKey<CR>", "Show all keymaps" },
     ["<leader>wk"] = { function() vim.cmd("WhichKey " .. vim.fn.input "WhichKey: ") end, "Query keymap" },
+  },
+}
+
+M.fugitive = {
+  n = {
+    ["<leader>gf"] = { "<cmd>Git<CR>", "Fugitive" },
+    ["<A-g>"] = { "<cmd>Gvdiff<CR>", "Fugitive vertical diff" },
   },
 }
 

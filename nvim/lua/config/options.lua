@@ -17,7 +17,6 @@ o.smartindent = true
 o.tabstop = 2
 o.softtabstop = 2
 
-
 opt.fillchars = { eob = " " }
 o.ignorecase = true
 o.smartcase = true
@@ -28,11 +27,9 @@ o.number = true
 o.numberwidth = 2
 o.ruler = false
 
-
 -- disable nvim intro
 
 opt.shortmess:append "sI"
-
 
 o.signcolumn = "yes"
 o.splitbelow = true

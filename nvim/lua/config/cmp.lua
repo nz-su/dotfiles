@@ -7,19 +7,14 @@ local cmp = require "cmp"
 
 
 local options = {
-
   completion = { completeopt = "menu,menuone" },
-
   snippet = {
     expand = function(args)
       require("luasnip").lsp_expand(args.body)
     end,
   },
-
   -- Use the imported mappings
   mapping = cmp_mappings(cmp),
-
-
   sources = {
     { name = "nvim_lsp" },
     { name = "luasnip" },

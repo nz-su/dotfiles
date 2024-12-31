@@ -14,9 +14,9 @@ local mappings = require("config.keybinds")
 local function set_mappings(mode, keymaps)
   for key, map in pairs(keymaps) do
     vim.keymap.set(
-      mode, 
-      key, 
-      map[1], 
+      mode,
+      key,
+      map[1],
       { desc = map[2], remap = map.remap or false, silent = true, noremap = true }
     )
   end
@@ -45,7 +45,6 @@ for mode, keymaps in pairs(mappings.nvimtree) do
 end
 
 -- Telescope mappings
-
 for mode, keymaps in pairs(mappings.telescope) do
   set_mappings(mode, keymaps)
 end
@@ -57,5 +56,9 @@ end
 
 -- WhichKey mappings
 for mode, keymaps in pairs(mappings.whichkey) do
+  set_mappings(mode, keymaps)
+end
+
+for mode, keymaps in pairs(mappings.fugitive) do
   set_mappings(mode, keymaps)
 end
